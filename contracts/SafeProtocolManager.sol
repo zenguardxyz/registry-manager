@@ -173,7 +173,7 @@ contract SafeProtocolManager is ISafeProtocolManager, RegistryManager, HooksMana
     function enablePlugin(
         address plugin,
         uint8 permissions
-    ) external noZeroOrSentinelPlugin(plugin) onlyPermittedModule(plugin) onlyAccount {
+    ) virtual external noZeroOrSentinelPlugin(plugin) onlyPermittedModule(plugin) onlyAccount {
         // address(0) check omitted because it is not expected to enable it as a plugin and
         // call to it would fail. Additionally, registry should not permit address(0) as an module.
         if (!ISafeProtocolPlugin(plugin).supportsInterface(type(ISafeProtocolPlugin).interfaceId))

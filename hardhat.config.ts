@@ -6,6 +6,7 @@ import yargs from "yargs";
 import { HttpNetworkUserConfig } from "hardhat/types";
 import "hardhat-deploy";
 import { DeterministicDeploymentInfo } from "hardhat-deploy/dist/types";
+import 'hardhat-dependency-compiler';
 import { getSingletonFactoryInfo } from "@safe-global/safe-singleton-factory";
 import { ethers } from "ethers";
 import "./src/tasks/generate_deployments_markdown";
@@ -52,7 +53,7 @@ sharedNetworkConfig.accounts = {
 }
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.18",
+  solidity: "0.8.19",
   gasReporter: {
     enabled: (process.env.REPORT_GAS) ? true : false
   },
@@ -99,6 +100,14 @@ const config: HardhatUserConfig = {
         url: `https://api.avax.network/ext/bc/C/rpc`,
     },
   },
+
+  dependencyCompiler: {
+    paths: [
+      '@ethereum-attestation-service/eas-contracts/contracts/EAS.sol',
+      '@ethereum-attestation-service/eas-contracts/contracts/SchemaRegistry.sol'
+    ]
+  },
+
   deterministicDeployment,
   etherscan: {
     apiKey: ETHERSCAN_API_KEY,
