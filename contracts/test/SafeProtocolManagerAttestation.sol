@@ -3,6 +3,7 @@ pragma solidity ^0.8.18;
 import {SafeProtocolManager} from "../SafeProtocolManager.sol";
 import {ISafeProtocolPlugin, ISafeProtocolHooks} from "../interfaces/Modules.sol";
 import {ISafeProtocolRegistryAttested} from "../interfaces/RegistryAttested.sol";
+import {MODULE_TYPE_PLUGIN, MODULE_TYPE_HOOKS} from "../common/Constants.sol";
 
 /**
  * @title This is a test version of SafeProtocolManager and should use TestSafeProtocolRegistryUnrestricted contract as resgistry.
@@ -15,7 +16,7 @@ contract SafeProtocolManagerAttestation is SafeProtocolManager {
         // Only allow attested, registered and non-flagged plugins
         (uint64 listedAt, uint64 flaggedAt, bytes32 attestationId) = ISafeProtocolRegistryAttested(registry).checkAttest(plugin);
         if (listedAt == 0 || flaggedAt != 0 || attestationId == 0) {
-            revert ModuleNotPermitted(plugin, listedAt, flaggedAt);
+            revert ModuleNotPermitted(plugin, listedAt, flaggedAt, MODULE_TYPE_PLUGIN);
         }
         _;
     }
@@ -28,10 +29,15 @@ contract SafeProtocolManagerAttestation is SafeProtocolManager {
      * @param permissions uint8 indicating permissions granted to the plugin.
      */
      
+        /**
+     * @notice Enables a plugin for an account. Must be called by the account.
+     * @param plugin ISafeProtocolPlugin A plugin that has to be enabled
+     * @param permissions uint8 indicating permissions granted to the plugin.
+     */
     function enablePlugin(
         address plugin,
         uint8 permissions
-    ) override external noZeroOrSentinelPlugin(plugin) onlyPermittedModule(plugin) onlyAttestedPlugin(plugin) onlyAccount {
+    ) external override virtual noZeroOrSentinelPlugin(plugin) onlyPermittedModule(plugin, MODULE_TYPE_PLUGIN) onlyAttestedPlugin(plugin) onlyAccount {
         // address(0) check omitted because it is not expected to enable it as a plugin and
         // call to it would fail. Additionally, registry should not permit address(0) as an module.
         if (!ISafeProtocolPlugin(plugin).supportsInterface(type(ISafeProtocolPlugin).interfaceId))
@@ -62,7 +68,7 @@ contract SafeProtocolManagerAttestation is SafeProtocolManager {
 
     function setHooks(address hooks) override external onlyAccount onlyAttestedPlugin(hooks) {
         if (hooks != address(0)) {
-            checkPermittedModule(hooks);
+            checkPermittedModule(hooks, MODULE_TYPE_HOOKS);
             if (!ISafeProtocolHooks(hooks).supportsInterface(type(ISafeProtocolHooks).interfaceId))
                 revert ContractDoesNotImplementValidInterfaceId(hooks);
         }

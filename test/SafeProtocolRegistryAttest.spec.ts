@@ -4,7 +4,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { expect } from "chai";
 import { AddressZero } from "@ethersproject/constants";
 import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
-import { ModuleType } from "./utils/constants";
+import { MODULE_TYPE_PLUGIN, MODULE_TYPE_HOOKS, MODULE_TYPE_FUNCTION_HANDLER } from "../src/utils/constants";
 import { getSchemaUID, EAS, SchemaEncoder} from "@ethereum-attestation-service/eas-sdk";
 import { SignerOrProvider } from "@ethereum-attestation-service/eas-sdk/dist/transaction";
 import { getHooksWithPassingChecks } from "./utils/mockHooksBuilder";
@@ -37,8 +37,8 @@ describe("SafeProtocolRegistryAttestation", async () => {
     it("Should allow add a module only once", async () => {
         const { safeProtocolRegistry } = await loadFixture(deployContractFixture);
         const mockHookAddress = (await getHooksWithPassingChecks()).target;
-        await safeProtocolRegistry.connect(owner).addModule(mockHookAddress, ModuleType.Plugin);
-        await expect(safeProtocolRegistry.connect(owner).addModule(mockHookAddress, ModuleType.Plugin)).to.be.revertedWithCustomError(
+        await safeProtocolRegistry.connect(owner).addModule(mockHookAddress, MODULE_TYPE_PLUGIN);
+        await expect(safeProtocolRegistry.connect(owner).addModule(mockHookAddress, MODULE_TYPE_PLUGIN)).to.be.revertedWithCustomError(
             safeProtocolRegistry,
             "CannotAddModule",
         );
@@ -49,7 +49,7 @@ describe("SafeProtocolRegistryAttestation", async () => {
         const { safeProtocolRegistry } = await loadFixture(deployContractFixture);
         const mockHookAddress = (await getHooksWithPassingChecks()).target;
 
-        await safeProtocolRegistry.connect(owner).addModule(mockHookAddress, ModuleType.Plugin);
+        await safeProtocolRegistry.connect(owner).addModule(mockHookAddress, MODULE_TYPE_PLUGIN);
 
         await expect(safeProtocolRegistry.connect(user1).flagModule(mockHookAddress)).to.be.revertedWith(
             "Ownable: caller is not the owner",
@@ -80,7 +80,7 @@ describe("SafeProtocolRegistryAttestation", async () => {
         
 
 
-        await safeProtocolRegistry.connect(owner).addModule(mockHookAddress, ModuleType.Plugin);
+        await safeProtocolRegistry.connect(owner).addModule(mockHookAddress, MODULE_TYPE_PLUGIN);
 
         await schemaRegistry.register(schema, await resolver.getAddress(), true);
 
@@ -132,7 +132,7 @@ describe("SafeProtocolRegistryAttestation", async () => {
         { name: "voteIndex", value: 1, type: "uint8" },
         ]);
 
-        await safeProtocolRegistry.connect(owner).addModule(pluginAddress, ModuleType.Plugin);
+        await safeProtocolRegistry.connect(owner).addModule(pluginAddress, MODULE_TYPE_PLUGIN);
 
         await schemaRegistry.register(schema, await resolver.getAddress(), true);
 
@@ -179,7 +179,7 @@ describe("SafeProtocolRegistryAttestation", async () => {
         { name: "voteIndex", value: 1, type: "uint8" },
         ]);
 
-        await safeProtocolRegistry.connect(owner).addModule(hookAddress, ModuleType.Hooks);
+        await safeProtocolRegistry.connect(owner).addModule(hookAddress, MODULE_TYPE_HOOKS);
 
         await schemaRegistry.register(schema, await resolver.getAddress(), true);
 
