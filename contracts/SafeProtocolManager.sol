@@ -8,6 +8,7 @@ import {SafeProtocolAction, SafeTransaction, SafeRootAccess} from "./DataTypes.s
 import {ISafeProtocolRegistry} from "./interfaces/Registry.sol";
 import {RegistryManager} from "./base/RegistryManager.sol";
 import {HooksManager} from "./base/HooksManager.sol";
+import {Enum} from "./common/Enum.sol";
 
 /**
  * @title SafeProtocolManager contract allows Safe users to set plugin through a Manager rather than directly enabling a plugin on Safe.
@@ -60,6 +61,124 @@ contract SafeProtocolManager is ISafeProtocolManager, RegistryManager, HooksMana
     }
 
     constructor(address initialOwner, address _registry) RegistryManager(_registry, initialOwner) {}
+
+
+     /**
+     * @notice Implement BaseGuard interface to allow an account to add Manager as a guard for existing Safe accounts (upto version 1.5.x).
+     * @dev An account must enable SafeProtocolManager as a Guard (for Safe v1.x) and enable a contract address as Hooks.
+     *      If there is no hooks enabled for the Safe, transaction will pass through without any checks.
+     * @param to address of the account
+     * @param value Amount of ETH to be sent
+     * @param data Artibtrary length bytes containing payload
+     * @param operation Call or DelegateCall operation
+     * @param safeTxGas uint256
+     * @param baseGas uint256
+     * @param gasPrice uint256
+     * @param gasToken address
+     * @param refundReceiver payable address
+     * @param signatures Arbitrary bytes containing ECDSA signatures
+     * @param msgSender Sender of the transaction
+     */
+    function checkTransaction(
+        address to,
+        uint256 value,
+        bytes memory data,
+        Enum.Operation operation,
+        uint256 safeTxGas,
+        uint256 baseGas,
+        uint256 gasPrice,
+        address gasToken,
+        address payable refundReceiver,
+        bytes memory signatures,
+        address msgSender
+    ) external {
+        // Store hooks address in tempHooksAddress so that checkAfterExecution(...) can access it.
+        // A temprary storage is required to use old hooks in checkAfterExecution if hooks get updated in between transaction
+        tempHooksData[msg.sender].hooksAddress = enabledHooks[msg.sender];
+        address tempHooksAddressForAccount = enabledHooks[msg.sender];
+
+        if (tempHooksAddressForAccount == address(0)) return;
+        bytes memory executionMetadata = abi.encode(
+            to,
+            value,
+            data,
+            safeTxGas,
+            baseGas,
+            gasPrice,
+            gasToken,
+            refundReceiver,
+            signatures,
+            msgSender
+        );
+
+        if (operation == Enum.Operation.Call) {
+            SafeProtocolAction[] memory actions = new SafeProtocolAction[](1);
+            actions[0] = SafeProtocolAction(payable(to), value, data);
+            SafeTransaction memory safeTx = SafeTransaction(actions, 0, "");
+            tempHooksData[msg.sender].preCheckData = ISafeProtocolHooks(tempHooksAddressForAccount).preCheck(
+                ISafe(msg.sender),
+                safeTx,
+                0,
+                executionMetadata
+            );
+        } else {
+            // Using else instead of "else if(operation == Enum.Operation.DelegateCall)" to reduce gas usage
+            // because accounts must only allow Call and DelegateCall operations.
+            SafeProtocolAction memory action = SafeProtocolAction(payable(to), value, data);
+            SafeRootAccess memory safeTx = SafeRootAccess(action, 0, "");
+            tempHooksData[msg.sender].preCheckData = ISafeProtocolHooks(tempHooksAddressForAccount).preCheckRootAccess(
+                ISafe(msg.sender),
+                safeTx,
+                0,
+                executionMetadata
+            );
+        }
+    }
+
+    function checkModuleTransaction(
+        address to,
+        uint256 value,
+        bytes memory data,
+        Enum.Operation operation,
+        address module /* onlyPermittedPlugin(module) uncomment this? */ // Use term plugin?
+    ) external returns (bytes32 moduleTxHash) {
+        // Store hooks address in tempHooksAddress so that checkAfterExecution(...) can access it.
+        // A temprary storage is required to use old hooks in checkAfterExecution if hooks get updated in between transaction
+        tempHooksData[msg.sender].hooksAddress = enabledHooks[msg.sender];
+        address tempHooksAddressForSafe = enabledHooks[msg.sender];
+
+        moduleTxHash = keccak256(abi.encode(to, value, data, operation, module));
+        if (tempHooksAddressForSafe == address(0)) return moduleTxHash;
+
+        if (operation == Enum.Operation.Call) {
+            SafeProtocolAction[] memory actions = new SafeProtocolAction[](1);
+            actions[0] = SafeProtocolAction(payable(to), value, data);
+            SafeTransaction memory safeTx = SafeTransaction(actions, 0, "");
+            ISafeProtocolHooks(tempHooksAddressForSafe).preCheck(ISafe(msg.sender), safeTx, 1, abi.encode(module));
+        } else {
+            // Using else instead of "else if(operation == Enum.Operation.DelegateCall)" to reduce gas usage
+            // and Safe allows only Call and DelegateCall operations.
+            SafeProtocolAction memory action = SafeProtocolAction(payable(to), value, data);
+            SafeRootAccess memory safeTx = SafeRootAccess(action, 0, "");
+            ISafeProtocolHooks(tempHooksAddressForSafe).preCheckRootAccess(ISafe(msg.sender), safeTx, 1, abi.encode(module));
+        }
+
+        return moduleTxHash;
+    }
+
+
+       function checkAfterExecution(bytes32, bool success) external {
+        address tempHooksAddressForSafe = tempHooksData[msg.sender].hooksAddress;
+        if (tempHooksAddressForSafe == address(0)) return;
+
+        // Use tempHooksAddress to avoid a case where hooks get updated in the middle of a transaction.
+        ISafeProtocolHooks(tempHooksAddressForSafe).postCheck(ISafe(msg.sender), success, tempHooksData[msg.sender].preCheckData);
+
+        // Reset to address(0) so that there is no unattended storage
+        tempHooksData[msg.sender].hooksAddress = address(0);
+        tempHooksData[msg.sender].preCheckData = bytes("");
+    }
+
 
     /**
      * @notice This function executes non-delegate call(s) on a safe if the plugin is enabled on the Safe.
@@ -170,7 +289,7 @@ contract SafeProtocolManager is ISafeProtocolManager, RegistryManager, HooksMana
      * @param plugin ISafeProtocolPlugin A plugin that has to be enabled
      * @param allowRootAccess Bool indicating whether root access to be allowed.
      */
-    function enablePlugin(address plugin, bool allowRootAccess) external noZeroOrSentinelPlugin(plugin) onlyPermittedPlugin(plugin) {
+    function enablePlugin(address plugin, bool allowRootAccess) virtual external noZeroOrSentinelPlugin(plugin) onlyPermittedPlugin(plugin) {
         PluginAccessInfo storage senderSentinelPlugin = enabledPlugins[msg.sender][SENTINEL_MODULES];
         PluginAccessInfo storage senderPlugin = enabledPlugins[msg.sender][plugin];
 

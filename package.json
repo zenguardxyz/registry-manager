@@ -73,5 +73,10 @@
     "typechain": "^8.2.0",
     "typescript": "~5.0.0",
     "yargs": "^17.7.2"
+  },
+  "dependencies": {
+    "@ethereum-attestation-service/eas-contracts": "1.0.0-beta.0",
+    "@ethereum-attestation-service/eas-sdk": "1.0.0-beta.0",
+    "hardhat-dependency-compiler": "^1.1.3"
   }
 }

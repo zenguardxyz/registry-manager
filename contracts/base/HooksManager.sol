@@ -11,6 +11,16 @@ contract HooksManager {
     // Errors
     error AddressDoesNotImplementHooksInterface(address hooksAddress);
 
+
+        struct TempHooksInfo {
+        address hooksAddress;
+        bytes preCheckData;
+    }
+    /// @notice This variable should store the address of the hooks contract whenever
+    /// checkTransaction(...) is called and use it in checkAfterExecution(...) to avoid
+    /// any side effects of changed hooks address inbetween transaction.
+    mapping(address => TempHooksInfo) public tempHooksData;
+
     /**
      * @notice Returns the address of hooks for a Safe account provided as a fucntion parameter.
      *         Returns address(0) is no hooks are enabled.
@@ -25,7 +35,7 @@ contract HooksManager {
      * @notice Sets hooks on an account. If Zero address is set, manager will not perform pre and post checks for on Safe transaction.
      * @param hooks Address of the hooks to be enabled for msg.sender.
      */
-    function setHooks(address hooks) external {
+    function setHooks(address hooks) virtual external {
         if (hooks != address(0) && !ISafeProtocolHooks(hooks).supportsInterface(type(ISafeProtocolHooks).interfaceId)) {
             revert AddressDoesNotImplementHooksInterface(hooks);
         }

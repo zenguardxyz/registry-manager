@@ -42,7 +42,7 @@ contract SafeProtocolRegistry is ISafeProtocolRegistry, Ownable2Step {
      *         TODO: Add logic to validate if integration implements correct interface.
      * @param integration Address of the integration
      */
-    function addIntegration(address integration, Enum.IntegrationType integrationType) external onlyOwner {
+    function addIntegration(address integration, Enum.IntegrationType integrationType) virtual external onlyOwner {
         IntegrationInfo memory integrationInfo = listedIntegrations[integration];
 
         if (integrationInfo.listedAt != 0) {

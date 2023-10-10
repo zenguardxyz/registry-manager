@@ -1,5 +1,6 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import 'hardhat-dependency-compiler';
 import "hardhat-gas-reporter";
 import dotenv from "dotenv";
 import yargs from "yargs";
@@ -50,7 +51,7 @@ sharedNetworkConfig.accounts = {
 }
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.18",
+  solidity: "0.8.19",
   gasReporter: {
     enabled: (process.env.REPORT_GAS) ? true : false
   },
@@ -71,9 +72,59 @@ const config: HardhatUserConfig = {
     gnosis: {
       ...sharedNetworkConfig,
       url: "https://rpc.gnosischain.com",
-    }
+    },
+    mainnet: {
+      ...sharedNetworkConfig,
+      url: `https://mainnet.infura.io/v3/${INFURA_KEY}`,
+    },
+    polygon: {
+        ...sharedNetworkConfig,
+        url: `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`,
+    },
+    bsc: {
+        ...sharedNetworkConfig,
+        url: `https://bsc-dataseed.binance.org/`,
+    },
+    arbitrum: {
+        ...sharedNetworkConfig,
+        url: `https://arb1.arbitrum.io/rpc`,
+    },
+    fantomTestnet: {
+        ...sharedNetworkConfig,
+        url: `https://rpc.testnet.fantom.network/`,
+    },
+    avalanche: {
+        ...sharedNetworkConfig,
+        url: `https://api.avax.network/ext/bc/C/rpc`,
+    },
+    base: {
+      ...sharedNetworkConfig,
+      url: `https://mainnet.base.org`,
+    },
+    base_goerli: {
+      ...sharedNetworkConfig,
+      url: `https://1rpc.io/base-goerli`,
+      gas: 4522512,
+    },
+    optimism: {
+      ...sharedNetworkConfig,
+      url: `https://mainnet.optimism.io`,
+    },
+    optimism_goerli: {
+      ...sharedNetworkConfig,
+      url: `https://goerli.optimism.io	`,
+    },
   },
+
+  dependencyCompiler: {
+    paths: [
+      '@ethereum-attestation-service/eas-contracts/contracts/EAS.sol',
+      '@ethereum-attestation-service/eas-contracts/contracts/SchemaRegistry.sol'
+    ]
+  },
+  
   deterministicDeployment,
+  
   etherscan: {
     apiKey: ETHERSCAN_API_KEY,
   },
