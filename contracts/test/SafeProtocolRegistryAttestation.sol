@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 pragma solidity ^0.8.18;
 import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
-import { IEAS, AttestationRequest, AttestationRequestData } from "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol";
+import { IEAS, Attestation, AttestationRequest, AttestationRequestData } from "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol";
 import { NO_EXPIRATION_TIME, EMPTY_UID } from "@ethereum-attestation-service/eas-contracts/contracts/Common.sol";
 
 import {Enum} from "../common/Enum.sol";
@@ -18,36 +18,44 @@ contract SafeProtocolRegistryAttestation is SafeProtocolRegistry {
 
     mapping(address => AttestationInfo) public listedAttestations;
 
+    IEAS public eas;
+
    // Add more fields based on the discussion from EIP-7512
     struct AttestationInfo {
         bytes32 attestationId;
+        bool initialized;
     }
 
     event ModuleAttested(address indexed module);
 
     error CannotAttestModule(address module);
 
-    constructor(address initialOwner) SafeProtocolRegistry(initialOwner) {}
+
+    constructor(address initialOwner, IEAS _eas) SafeProtocolRegistry(initialOwner) {
+
+        eas = _eas;
+    }
 
         /**
      * @notice Allows only owner to add a integration. A integration can be any address including zero address for now.
-     *         This function does not permit adding a integration twice.
+     *         This function does not permit adding a integrationfunction attestIntegration(address integration, IEAS eas, bytes32 attestation) external {
+
      *         TODO: Add logic to validate if integration implements correct interface.
      * @param integration Address of the integration
      */
-    function addIntegration(address integration, Enum.IntegrationType integrationType) external override {
+    function addIntegration(address integration, Enum.IntegrationType integrationType) external override onlyVerifiedPublisher(msg.sender) {
         IntegrationInfo memory integrationInfo = listedIntegrations[integration];
 
         if (integrationInfo.listedAt != 0) {
             revert CannotAddIntegration(integration);
         }
         listedIntegrations[integration] = IntegrationInfo(uint64(block.timestamp), 0, integrationType);
-        emit IntegrationAdded(integration);
+        emit IntegrationAdded(integration, msg.sender);
     }
 
     
     
-    function attestIntegration(address integration, IEAS eas, bytes32 attestation) external {
+    function attestIntegration(address integration, bytes32 attestation) external {
 
         IntegrationInfo memory integrationInfo = listedIntegrations[integration];    
 
@@ -75,10 +83,23 @@ contract SafeProtocolRegistryAttestation is SafeProtocolRegistry {
 
         if(eas.isAttestationValid(attestation)) {
         listedAttestations[integration] = AttestationInfo(
-            attestation
+            attestation,
+            true
         );
         }
         emit ModuleAttested(integration);
+    }
+
+    function attestPublisher(bytes32 attestation) external {
+
+
+        if(eas.isAttestationValid(attestation)) {
+        listedAttestations[msg.sender] = AttestationInfo(
+            attestation,
+            true
+        );
+        }
+        emit ModuleAttested(msg.sender);
     }
 
 
@@ -88,6 +109,19 @@ contract SafeProtocolRegistryAttestation is SafeProtocolRegistry {
         listedAt = integrationInfo.listedAt;
         flaggedAt = integrationInfo.flaggedAt;
         attestationId = attestationInfo.attestationId;
+        
+    }
+
+    modifier onlyVerifiedPublisher(address publisher)  {
+
+        AttestationInfo memory attestationInfo = listedAttestations[publisher];
+
+        require(attestationInfo.initialized, "Publisher not yet verified");
+        Attestation memory attestation = eas.getAttestation(attestationInfo.attestationId);
+        
+        bool verified = abi.decode(attestation.data, (bool));
+        require(verified, "Publisher not yet verified");
+        _;
         
     }
 }

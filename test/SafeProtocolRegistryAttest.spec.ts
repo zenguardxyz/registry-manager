@@ -13,18 +13,20 @@ describe("SafeProtocolRegistryAttestation", async () => {
 
     async function deployContractFixture() {
         [owner, user1] = await ethers.getSigners();
-        const safeProtocolRegistry = await ethers.deployContract("SafeProtocolRegistryAttestation", [owner]);
 
-        const safe = await ethers.deployContract("TestExecutor");
-        const safeProtocolManager = await (
-            await ethers.getContractFactory("SafeProtocolManagerAttestation")
-        ).deploy(owner, await safeProtocolRegistry.getAddress());
         
         const schemaRegistry = await ethers.deployContract("SchemaRegistry");
 
         const eas = await ethers.deployContract('EAS', [await schemaRegistry.getAddress()]);
 
         const resolver = await ethers.deployContract("ResolverSample", [await eas.getAddress()]);
+
+        const safeProtocolRegistry = await ethers.deployContract("SafeProtocolRegistryAttestation", [owner, await eas.getAddress()]);
+
+        const safe = await ethers.deployContract("TestExecutor");
+        const safeProtocolManager = await (
+            await ethers.getContractFactory("SafeProtocolManagerAttestation")
+        ).deploy(owner, await safeProtocolRegistry.getAddress());
 
         return {safeProtocolManager, safe, safeProtocolRegistry, schemaRegistry, eas, resolver};
     }
@@ -92,7 +94,7 @@ describe("SafeProtocolRegistryAttestation", async () => {
 
         const newAttestationUID = await attestation.wait();
 
-        expect(await safeProtocolRegistry.connect(owner).attestIntegration(AddressZero, await eas.getAddress(), newAttestationUID ));
+        expect(await safeProtocolRegistry.connect(owner).attestIntegration(AddressZero, newAttestationUID ));
 
         const {attestationId } = await safeProtocolRegistry.checkAttest.staticCall(AddressZero);
 
@@ -144,7 +146,7 @@ describe("SafeProtocolRegistryAttestation", async () => {
 
         const newAttestationUID = await attestation.wait();
 
-        expect(await safeProtocolRegistry.connect(owner).attestIntegration(pluginAddress, await eas.getAddress(), newAttestationUID ));
+        expect(await safeProtocolRegistry.connect(owner).attestIntegration(pluginAddress, newAttestationUID ));
 
         const data = safeProtocolManager.interface.encodeFunctionData("enablePlugin", [pluginAddress, false]);
         await safe.exec(await safeProtocolManager.getAddress(), 0, data);

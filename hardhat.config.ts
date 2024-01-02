@@ -105,9 +105,9 @@ const config: HardhatUserConfig = {
       ...sharedNetworkConfig,
       url: `https://mainnet.base.org`,
     },
-    base_goerli: {
+    baseGoerli: {
       ...sharedNetworkConfig,
-      url: `https://1rpc.io/base-goerli`,
+      url: `https://base-goerli.g.alchemy.com/v2/K1GZzIiF6-PthdjPtfzvTOMcej2zOWWA`,
       gas: 4522512,
     },
     optimism: {

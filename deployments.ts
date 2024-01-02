@@ -2642,11 +2642,11 @@ export default {
   ],
   "84531": [
     {
-      "name": "base_goerli",
+      "name": "baseGoerli",
       "chainId": "84531",
       "contracts": {
         "SafeProtocolManagerAttestation": {
-          "address": "0x68F29c8054dBB959e39eA49c7DF7361517A870aA",
+          "address": "0x1789c680FDb930FA85d60039cF39B023C48de155",
           "abi": [
             {
               "inputs": [
@@ -3578,7 +3578,1593 @@ export default {
           ]
         },
         "SafeProtocolRegistryAttestation": {
-          "address": "0xB8Efa352FA011EEe3552f73aC86d5b5ecA9802f7",
+          "address": "0xbc334A41b98a0d28277769963eD5D4A7bc429879",
+          "abi": [
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "initialOwner",
+                  "type": "address"
+                },
+                {
+                  "internalType": "contract IEAS",
+                  "name": "_eas",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "CannotAddIntegration",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "module",
+                  "type": "address"
+                }
+              ],
+              "name": "CannotAttestModule",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "CannotFlagIntegration",
+              "type": "error"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "publisher",
+                  "type": "address"
+                }
+              ],
+              "name": "IntegrationAdded",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "IntegrationFlagged",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "module",
+                  "type": "address"
+                }
+              ],
+              "name": "ModuleAttested",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferStarted",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferred",
+              "type": "event"
+            },
+            {
+              "inputs": [],
+              "name": "acceptOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                },
+                {
+                  "internalType": "enum Enum.IntegrationType",
+                  "name": "integrationType",
+                  "type": "uint8"
+                }
+              ],
+              "name": "addIntegration",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "attestation",
+                  "type": "bytes32"
+                }
+              ],
+              "name": "attestIntegration",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "attestation",
+                  "type": "bytes32"
+                }
+              ],
+              "name": "attestPublisher",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "check",
+              "outputs": [
+                {
+                  "internalType": "uint64",
+                  "name": "listedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "flaggedAt",
+                  "type": "uint64"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "checkAttest",
+              "outputs": [
+                {
+                  "internalType": "uint64",
+                  "name": "listedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "flaggedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "attestationId",
+                  "type": "bytes32"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "eas",
+              "outputs": [
+                {
+                  "internalType": "contract IEAS",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "flagIntegration",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "listedAttestations",
+              "outputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "attestationId",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "initialized",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "listedIntegrations",
+              "outputs": [
+                {
+                  "internalType": "uint64",
+                  "name": "listedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "flaggedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "enum Enum.IntegrationType",
+                  "name": "integrationType",
+                  "type": "uint8"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "owner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "pendingOwner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "bytes4",
+                  "name": "interfaceId",
+                  "type": "bytes4"
+                }
+              ],
+              "name": "supportsInterface",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "transferOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "base_goerli",
+      "chainId": "84531",
+      "contracts": {
+        "SafeProtocolManagerAttestation": {
+          "address": "0xEde5056fAEafF22E922ED6a8458091B7404354A8",
+          "abi": [
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "initialOwner",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "registry",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "account",
+                  "type": "address"
+                }
+              ],
+              "name": "AccountDoesNotImplementValidInterfaceId",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "index",
+                  "type": "uint256"
+                }
+              ],
+              "name": "ActionExecutionFailed",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "hooksAddress",
+                  "type": "address"
+                }
+              ],
+              "name": "AddressDoesNotImplementHooksInterface",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "InvalidPluginAddress",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "InvalidPrevPluginAddress",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "index",
+                  "type": "uint256"
+                }
+              ],
+              "name": "InvalidToFieldInSafeProtocolAction",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "requiresRootAccess",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "providedValue",
+                  "type": "bool"
+                }
+              ],
+              "name": "PluginAccessMismatch",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginAlreadyEnabled",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginEnabledOnlyForRootAccess",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginNotEnabled",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "listedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "flaggedAt",
+                  "type": "uint64"
+                }
+              ],
+              "name": "PluginNotPermitted",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "sender",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginRequiresRootAccess",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                }
+              ],
+              "name": "RootAccessActionExecutionFailed",
+              "type": "error"
+            },
+            {
+              "inputs": [],
+              "name": "ZeroPageSizeNotAllowed",
+              "type": "error"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "nonce",
+                  "type": "uint256"
+                }
+              ],
+              "name": "ActionsExecuted",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "hooksAddress",
+                  "type": "address"
+                }
+              ],
+              "name": "HooksChanged",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferStarted",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferred",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginDisabled",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "bool",
+                  "name": "allowRootAccess",
+                  "type": "bool"
+                }
+              ],
+              "name": "PluginEnabled",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "oldRegistry",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newRegistry",
+                  "type": "address"
+                }
+              ],
+              "name": "RegistryChanged",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                }
+              ],
+              "name": "RootAccessActionExecuted",
+              "type": "event"
+            },
+            {
+              "inputs": [],
+              "name": "acceptOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "success",
+                  "type": "bool"
+                }
+              ],
+              "name": "checkAfterExecution",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "to",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "value",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "data",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "enum Enum.Operation",
+                  "name": "operation",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "address",
+                  "name": "module",
+                  "type": "address"
+                }
+              ],
+              "name": "checkModuleTransaction",
+              "outputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "moduleTxHash",
+                  "type": "bytes32"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "to",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "value",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "data",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "enum Enum.Operation",
+                  "name": "operation",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "safeTxGas",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "baseGas",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "gasPrice",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address",
+                  "name": "gasToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address payable",
+                  "name": "refundReceiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "signatures",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "address",
+                  "name": "msgSender",
+                  "type": "address"
+                }
+              ],
+              "name": "checkTransaction",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "prevPlugin",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "disablePlugin",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "allowRootAccess",
+                  "type": "bool"
+                }
+              ],
+              "name": "enablePlugin",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "enabledHooks",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "enabledPlugins",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "rootAddressGranted",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "address",
+                  "name": "nextPluginPointer",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "contract ISafe",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "address payable",
+                          "name": "to",
+                          "type": "address"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "bytes",
+                          "name": "data",
+                          "type": "bytes"
+                        }
+                      ],
+                      "internalType": "struct SafeProtocolAction",
+                      "name": "action",
+                      "type": "tuple"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "nonce",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "bytes32",
+                      "name": "metadataHash",
+                      "type": "bytes32"
+                    }
+                  ],
+                  "internalType": "struct SafeRootAccess",
+                  "name": "rootAccess",
+                  "type": "tuple"
+                }
+              ],
+              "name": "executeRootAccess",
+              "outputs": [
+                {
+                  "internalType": "bytes",
+                  "name": "data",
+                  "type": "bytes"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "contract ISafe",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "address payable",
+                          "name": "to",
+                          "type": "address"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "bytes",
+                          "name": "data",
+                          "type": "bytes"
+                        }
+                      ],
+                      "internalType": "struct SafeProtocolAction[]",
+                      "name": "actions",
+                      "type": "tuple[]"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "nonce",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "bytes32",
+                      "name": "metadataHash",
+                      "type": "bytes32"
+                    }
+                  ],
+                  "internalType": "struct SafeTransaction",
+                  "name": "transaction",
+                  "type": "tuple"
+                }
+              ],
+              "name": "executeTransaction",
+              "outputs": [
+                {
+                  "internalType": "bytes[]",
+                  "name": "data",
+                  "type": "bytes[]"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                }
+              ],
+              "name": "getEnabledHooks",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "hooksAddress",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "getPluginInfo",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "bool",
+                      "name": "rootAddressGranted",
+                      "type": "bool"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "nextPluginPointer",
+                      "type": "address"
+                    }
+                  ],
+                  "internalType": "struct SafeProtocolManager.PluginAccessInfo",
+                  "name": "enabled",
+                  "type": "tuple"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "start",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "pageSize",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                }
+              ],
+              "name": "getPluginsPaginated",
+              "outputs": [
+                {
+                  "internalType": "address[]",
+                  "name": "array",
+                  "type": "address[]"
+                },
+                {
+                  "internalType": "address",
+                  "name": "next",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "isPluginEnabled",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "owner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "pendingOwner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "registry",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "hooks",
+                  "type": "address"
+                }
+              ],
+              "name": "setHooks",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newRegistry",
+                  "type": "address"
+                }
+              ],
+              "name": "setRegistry",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "tempHooksData",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "hooksAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "preCheckData",
+                  "type": "bytes"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "transferOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
+        },
+        "SafeProtocolRegistry": {
+          "address": "0xa667bb0B88e3b3079FE070B175AAAEDfdDAC44a5",
+          "abi": [
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "initialOwner",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "CannotAddIntegration",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "CannotFlagIntegration",
+              "type": "error"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "IntegrationAdded",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "IntegrationFlagged",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferStarted",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferred",
+              "type": "event"
+            },
+            {
+              "inputs": [],
+              "name": "acceptOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                },
+                {
+                  "internalType": "enum Enum.IntegrationType",
+                  "name": "integrationType",
+                  "type": "uint8"
+                }
+              ],
+              "name": "addIntegration",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "check",
+              "outputs": [
+                {
+                  "internalType": "uint64",
+                  "name": "listedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "flaggedAt",
+                  "type": "uint64"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "flagIntegration",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "listedIntegrations",
+              "outputs": [
+                {
+                  "internalType": "uint64",
+                  "name": "listedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "flaggedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "enum Enum.IntegrationType",
+                  "name": "integrationType",
+                  "type": "uint8"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "owner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "pendingOwner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "bytes4",
+                  "name": "interfaceId",
+                  "type": "bytes4"
+                }
+              ],
+              "name": "supportsInterface",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "transferOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
+        },
+        "SafeProtocolRegistryAttestation": {
+          "address": "0x036cE4a087649154aA9314fc12221BaE76eAc697",
           "abi": [
             {
               "inputs": [
@@ -5305,8 +6891,940 @@ export default {
       "name": "sepolia",
       "chainId": "11155111",
       "contracts": {
+        "SafeProtocolManager": {
+          "address": "0x4Cc303a26aa1876BEB96d279c30e99b1542DAF03",
+          "abi": [
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "initialOwner",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_registry",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "account",
+                  "type": "address"
+                }
+              ],
+              "name": "AccountDoesNotImplementValidInterfaceId",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "index",
+                  "type": "uint256"
+                }
+              ],
+              "name": "ActionExecutionFailed",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "hooksAddress",
+                  "type": "address"
+                }
+              ],
+              "name": "AddressDoesNotImplementHooksInterface",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "InvalidPluginAddress",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "InvalidPrevPluginAddress",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "index",
+                  "type": "uint256"
+                }
+              ],
+              "name": "InvalidToFieldInSafeProtocolAction",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "requiresRootAccess",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "providedValue",
+                  "type": "bool"
+                }
+              ],
+              "name": "PluginAccessMismatch",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginAlreadyEnabled",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginEnabledOnlyForRootAccess",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginNotEnabled",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "listedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "flaggedAt",
+                  "type": "uint64"
+                }
+              ],
+              "name": "PluginNotPermitted",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "sender",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginRequiresRootAccess",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                }
+              ],
+              "name": "RootAccessActionExecutionFailed",
+              "type": "error"
+            },
+            {
+              "inputs": [],
+              "name": "ZeroPageSizeNotAllowed",
+              "type": "error"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "nonce",
+                  "type": "uint256"
+                }
+              ],
+              "name": "ActionsExecuted",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "hooksAddress",
+                  "type": "address"
+                }
+              ],
+              "name": "HooksChanged",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferStarted",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferred",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginDisabled",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "bool",
+                  "name": "allowRootAccess",
+                  "type": "bool"
+                }
+              ],
+              "name": "PluginEnabled",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "oldRegistry",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newRegistry",
+                  "type": "address"
+                }
+              ],
+              "name": "RegistryChanged",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                }
+              ],
+              "name": "RootAccessActionExecuted",
+              "type": "event"
+            },
+            {
+              "inputs": [],
+              "name": "acceptOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "success",
+                  "type": "bool"
+                }
+              ],
+              "name": "checkAfterExecution",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "to",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "value",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "data",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "enum Enum.Operation",
+                  "name": "operation",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "address",
+                  "name": "module",
+                  "type": "address"
+                }
+              ],
+              "name": "checkModuleTransaction",
+              "outputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "moduleTxHash",
+                  "type": "bytes32"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "to",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "value",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "data",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "enum Enum.Operation",
+                  "name": "operation",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "safeTxGas",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "baseGas",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "gasPrice",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address",
+                  "name": "gasToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address payable",
+                  "name": "refundReceiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "signatures",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "address",
+                  "name": "msgSender",
+                  "type": "address"
+                }
+              ],
+              "name": "checkTransaction",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "prevPlugin",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "disablePlugin",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "allowRootAccess",
+                  "type": "bool"
+                }
+              ],
+              "name": "enablePlugin",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "enabledHooks",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "enabledPlugins",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "rootAddressGranted",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "address",
+                  "name": "nextPluginPointer",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "contract ISafe",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "address payable",
+                          "name": "to",
+                          "type": "address"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "bytes",
+                          "name": "data",
+                          "type": "bytes"
+                        }
+                      ],
+                      "internalType": "struct SafeProtocolAction",
+                      "name": "action",
+                      "type": "tuple"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "nonce",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "bytes32",
+                      "name": "metadataHash",
+                      "type": "bytes32"
+                    }
+                  ],
+                  "internalType": "struct SafeRootAccess",
+                  "name": "rootAccess",
+                  "type": "tuple"
+                }
+              ],
+              "name": "executeRootAccess",
+              "outputs": [
+                {
+                  "internalType": "bytes",
+                  "name": "data",
+                  "type": "bytes"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "contract ISafe",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "address payable",
+                          "name": "to",
+                          "type": "address"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "bytes",
+                          "name": "data",
+                          "type": "bytes"
+                        }
+                      ],
+                      "internalType": "struct SafeProtocolAction[]",
+                      "name": "actions",
+                      "type": "tuple[]"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "nonce",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "bytes32",
+                      "name": "metadataHash",
+                      "type": "bytes32"
+                    }
+                  ],
+                  "internalType": "struct SafeTransaction",
+                  "name": "transaction",
+                  "type": "tuple"
+                }
+              ],
+              "name": "executeTransaction",
+              "outputs": [
+                {
+                  "internalType": "bytes[]",
+                  "name": "data",
+                  "type": "bytes[]"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                }
+              ],
+              "name": "getEnabledHooks",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "hooksAddress",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "getPluginInfo",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "bool",
+                      "name": "rootAddressGranted",
+                      "type": "bool"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "nextPluginPointer",
+                      "type": "address"
+                    }
+                  ],
+                  "internalType": "struct SafeProtocolManager.PluginAccessInfo",
+                  "name": "enabled",
+                  "type": "tuple"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "start",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "pageSize",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                }
+              ],
+              "name": "getPluginsPaginated",
+              "outputs": [
+                {
+                  "internalType": "address[]",
+                  "name": "array",
+                  "type": "address[]"
+                },
+                {
+                  "internalType": "address",
+                  "name": "next",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "isPluginEnabled",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "owner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "pendingOwner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "registry",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "hooks",
+                  "type": "address"
+                }
+              ],
+              "name": "setHooks",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newRegistry",
+                  "type": "address"
+                }
+              ],
+              "name": "setRegistry",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "tempHooksData",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "hooksAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "preCheckData",
+                  "type": "bytes"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "transferOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
+        },
         "SafeProtocolManagerAttestation": {
-          "address": "0xEde5056fAEafF22E922ED6a8458091B7404354A8",
+          "address": "0x548ffe3207b643a6d95F7bfa01b5D4A0fb7DF01a",
           "abi": [
             {
               "inputs": [
@@ -6237,14 +8755,277 @@ export default {
             }
           ]
         },
-        "SafeProtocolRegistryAttestation": {
-          "address": "0x036cE4a087649154aA9314fc12221BaE76eAc697",
+        "SafeProtocolRegistry": {
+          "address": "0xa667bb0B88e3b3079FE070B175AAAEDfdDAC44a5",
           "abi": [
             {
               "inputs": [
                 {
                   "internalType": "address",
                   "name": "initialOwner",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "CannotAddIntegration",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "CannotFlagIntegration",
+              "type": "error"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "IntegrationAdded",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "IntegrationFlagged",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferStarted",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferred",
+              "type": "event"
+            },
+            {
+              "inputs": [],
+              "name": "acceptOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                },
+                {
+                  "internalType": "enum Enum.IntegrationType",
+                  "name": "integrationType",
+                  "type": "uint8"
+                }
+              ],
+              "name": "addIntegration",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "check",
+              "outputs": [
+                {
+                  "internalType": "uint64",
+                  "name": "listedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "flaggedAt",
+                  "type": "uint64"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "flagIntegration",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "listedIntegrations",
+              "outputs": [
+                {
+                  "internalType": "uint64",
+                  "name": "listedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "flaggedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "enum Enum.IntegrationType",
+                  "name": "integrationType",
+                  "type": "uint8"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "owner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "pendingOwner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "bytes4",
+                  "name": "interfaceId",
+                  "type": "bytes4"
+                }
+              ],
+              "name": "supportsInterface",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "transferOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
+        },
+        "SafeProtocolRegistryAttestation": {
+          "address": "0x31e02552F56939fA4B28CF3D86b552A4eA70f3E9",
+          "abi": [
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "initialOwner",
+                  "type": "address"
+                },
+                {
+                  "internalType": "contract IEAS",
+                  "name": "_eas",
                   "type": "address"
                 }
               ],
@@ -6291,6 +9072,12 @@ export default {
                   "indexed": false,
                   "internalType": "address",
                   "name": "integration",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "publisher",
                   "type": "address"
                 }
               ],
@@ -6394,17 +9181,25 @@ export default {
                   "type": "address"
                 },
                 {
-                  "internalType": "contract IEAS",
-                  "name": "eas",
-                  "type": "address"
-                },
-                {
                   "internalType": "bytes32",
                   "name": "attestation",
                   "type": "bytes32"
                 }
               ],
               "name": "attestIntegration",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "attestation",
+                  "type": "bytes32"
+                }
+              ],
+              "name": "attestPublisher",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
@@ -6463,6 +9258,19 @@ export default {
               "type": "function"
             },
             {
+              "inputs": [],
+              "name": "eas",
+              "outputs": [
+                {
+                  "internalType": "contract IEAS",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
               "inputs": [
                 {
                   "internalType": "address",
@@ -6489,9 +9297,1204 @@ export default {
                   "internalType": "bytes32",
                   "name": "attestationId",
                   "type": "bytes32"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "initialized",
+                  "type": "bool"
                 }
               ],
               "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "listedIntegrations",
+              "outputs": [
+                {
+                  "internalType": "uint64",
+                  "name": "listedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "flaggedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "enum Enum.IntegrationType",
+                  "name": "integrationType",
+                  "type": "uint8"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "owner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "pendingOwner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "bytes4",
+                  "name": "interfaceId",
+                  "type": "bytes4"
+                }
+              ],
+              "name": "supportsInterface",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "transferOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
+        },
+        "TestSafeProtocolManager": {
+          "address": "0xE02cEcd70B031d18D46D31A4bB27e83506D427dd",
+          "abi": [
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "initialOwner",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "registry",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "account",
+                  "type": "address"
+                }
+              ],
+              "name": "AccountDoesNotImplementValidInterfaceId",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "index",
+                  "type": "uint256"
+                }
+              ],
+              "name": "ActionExecutionFailed",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "hooksAddress",
+                  "type": "address"
+                }
+              ],
+              "name": "AddressDoesNotImplementHooksInterface",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "InvalidPluginAddress",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "InvalidPrevPluginAddress",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "index",
+                  "type": "uint256"
+                }
+              ],
+              "name": "InvalidToFieldInSafeProtocolAction",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "requiresRootAccess",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "providedValue",
+                  "type": "bool"
+                }
+              ],
+              "name": "PluginAccessMismatch",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginAlreadyEnabled",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginEnabledOnlyForRootAccess",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginNotEnabled",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "listedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "flaggedAt",
+                  "type": "uint64"
+                }
+              ],
+              "name": "PluginNotPermitted",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "sender",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginRequiresRootAccess",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                }
+              ],
+              "name": "RootAccessActionExecutionFailed",
+              "type": "error"
+            },
+            {
+              "inputs": [],
+              "name": "ZeroPageSizeNotAllowed",
+              "type": "error"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "nonce",
+                  "type": "uint256"
+                }
+              ],
+              "name": "ActionsExecuted",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "hooksAddress",
+                  "type": "address"
+                }
+              ],
+              "name": "HooksChanged",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferStarted",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferred",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "PluginDisabled",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "bool",
+                  "name": "allowRootAccess",
+                  "type": "bool"
+                }
+              ],
+              "name": "PluginEnabled",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "oldRegistry",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newRegistry",
+                  "type": "address"
+                }
+              ],
+              "name": "RegistryChanged",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "bytes32",
+                  "name": "metadataHash",
+                  "type": "bytes32"
+                }
+              ],
+              "name": "RootAccessActionExecuted",
+              "type": "event"
+            },
+            {
+              "inputs": [],
+              "name": "acceptOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "success",
+                  "type": "bool"
+                }
+              ],
+              "name": "checkAfterExecution",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "to",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "value",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "data",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "enum Enum.Operation",
+                  "name": "operation",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "address",
+                  "name": "module",
+                  "type": "address"
+                }
+              ],
+              "name": "checkModuleTransaction",
+              "outputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "moduleTxHash",
+                  "type": "bytes32"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "to",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "value",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "data",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "enum Enum.Operation",
+                  "name": "operation",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "safeTxGas",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "baseGas",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "gasPrice",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address",
+                  "name": "gasToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address payable",
+                  "name": "refundReceiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "signatures",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "address",
+                  "name": "msgSender",
+                  "type": "address"
+                }
+              ],
+              "name": "checkTransaction",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "prevPlugin",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "disablePlugin",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "allowRootAccess",
+                  "type": "bool"
+                }
+              ],
+              "name": "enablePlugin",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "enabledHooks",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "enabledPlugins",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "rootAddressGranted",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "address",
+                  "name": "nextPluginPointer",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "contract ISafe",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "address payable",
+                          "name": "to",
+                          "type": "address"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "bytes",
+                          "name": "data",
+                          "type": "bytes"
+                        }
+                      ],
+                      "internalType": "struct SafeProtocolAction",
+                      "name": "action",
+                      "type": "tuple"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "nonce",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "bytes32",
+                      "name": "metadataHash",
+                      "type": "bytes32"
+                    }
+                  ],
+                  "internalType": "struct SafeRootAccess",
+                  "name": "rootAccess",
+                  "type": "tuple"
+                }
+              ],
+              "name": "executeRootAccess",
+              "outputs": [
+                {
+                  "internalType": "bytes",
+                  "name": "data",
+                  "type": "bytes"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "contract ISafe",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "address payable",
+                          "name": "to",
+                          "type": "address"
+                        },
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        },
+                        {
+                          "internalType": "bytes",
+                          "name": "data",
+                          "type": "bytes"
+                        }
+                      ],
+                      "internalType": "struct SafeProtocolAction[]",
+                      "name": "actions",
+                      "type": "tuple[]"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "nonce",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "bytes32",
+                      "name": "metadataHash",
+                      "type": "bytes32"
+                    }
+                  ],
+                  "internalType": "struct SafeTransaction",
+                  "name": "transaction",
+                  "type": "tuple"
+                }
+              ],
+              "name": "executeTransaction",
+              "outputs": [
+                {
+                  "internalType": "bytes[]",
+                  "name": "data",
+                  "type": "bytes[]"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                }
+              ],
+              "name": "getEnabledHooks",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "hooksAddress",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "getPluginInfo",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "bool",
+                      "name": "rootAddressGranted",
+                      "type": "bool"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "nextPluginPointer",
+                      "type": "address"
+                    }
+                  ],
+                  "internalType": "struct SafeProtocolManager.PluginAccessInfo",
+                  "name": "enabled",
+                  "type": "tuple"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "start",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "pageSize",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                }
+              ],
+              "name": "getPluginsPaginated",
+              "outputs": [
+                {
+                  "internalType": "address[]",
+                  "name": "array",
+                  "type": "address[]"
+                },
+                {
+                  "internalType": "address",
+                  "name": "next",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "safe",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "plugin",
+                  "type": "address"
+                }
+              ],
+              "name": "isPluginEnabled",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "owner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "pendingOwner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "registry",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "hooks",
+                  "type": "address"
+                }
+              ],
+              "name": "setHooks",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newRegistry",
+                  "type": "address"
+                }
+              ],
+              "name": "setRegistry",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "tempHooksData",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "hooksAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "preCheckData",
+                  "type": "bytes"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "transferOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
+        },
+        "TestSafeProtocolRegistryUnrestricted": {
+          "address": "0xF1611ea3E011B80A2363aD6B2f4F0EC6F0520399",
+          "abi": [
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "initialOwner",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "CannotAddIntegration",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "CannotFlagIntegration",
+              "type": "error"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "IntegrationAdded",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "IntegrationFlagged",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferStarted",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "previousOwner",
+                  "type": "address"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "address",
+                  "name": "newOwner",
+                  "type": "address"
+                }
+              ],
+              "name": "OwnershipTransferred",
+              "type": "event"
+            },
+            {
+              "inputs": [],
+              "name": "acceptOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                },
+                {
+                  "internalType": "enum Enum.IntegrationType",
+                  "name": "integrationType",
+                  "type": "uint8"
+                }
+              ],
+              "name": "addIntegration",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "check",
+              "outputs": [
+                {
+                  "internalType": "uint64",
+                  "name": "listedAt",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "flaggedAt",
+                  "type": "uint64"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "integration",
+                  "type": "address"
+                }
+              ],
+              "name": "flagIntegration",
+              "outputs": [],
+              "stateMutability": "nonpayable",
               "type": "function"
             },
             {

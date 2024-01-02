@@ -17,7 +17,7 @@ contract SafeProtocolRegistry is ISafeProtocolRegistry, Ownable2Step {
     error CannotFlagIntegration(address integration);
     error CannotAddIntegration(address integration);
 
-    event IntegrationAdded(address integration);
+    event IntegrationAdded(address integration, address publisher);
     event IntegrationFlagged(address integration);
 
     constructor(address initialOwner) {
@@ -49,7 +49,7 @@ contract SafeProtocolRegistry is ISafeProtocolRegistry, Ownable2Step {
             revert CannotAddIntegration(integration);
         }
         listedIntegrations[integration] = IntegrationInfo(uint64(block.timestamp), 0, integrationType);
-        emit IntegrationAdded(integration);
+        emit IntegrationAdded(integration, msg.sender);
     }
 
     /**
