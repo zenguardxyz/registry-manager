@@ -11,15 +11,6 @@ import {ISafeProtocolRegistryAttested} from "../interfaces/RegistryAttested.sol"
 
 contract SafeProtocolManagerAttestation is SafeProtocolManager {
 
-    modifier onlyAttestedPlugin(address plugin) {
-        // Only allow attested, registered and non-flagged plugins
-        (uint64 listedAt, uint64 flaggedAt, bytes32 attestationId) = ISafeProtocolRegistryAttested(registry).checkAttest(plugin);
-        if (plugin != address(0) && (listedAt == 0 || flaggedAt != 0 || attestationId == 0)) {
-            revert("Module not attested");
-        }
-        _;
-    }
-
     modifier onlyVerifiedModule(address plugin) {
         // Only allow attested, registered and non-flagged plugins
         (uint64 listedAt, uint64 flaggedAt, bytes32 attestationId) = ISafeProtocolRegistryAttested(registry).checkAttest(plugin);
@@ -37,7 +28,7 @@ contract SafeProtocolManagerAttestation is SafeProtocolManager {
      * @param plugin ISafeProtocolPlugin A plugin that has to be enabled
      * @param allowRootAccess Bool indicating whether root access to be allowed.
      */
-    function enablePlugin(address plugin, bool allowRootAccess) external override noZeroOrSentinelPlugin(plugin) onlyPermittedPlugin(plugin) {
+    function enablePlugin(address plugin, bool allowRootAccess) external override noZeroOrSentinelPlugin(plugin) onlyPermittedPlugin(plugin)  onlyVerifiedModule(plugin)  {
         PluginAccessInfo storage senderSentinelPlugin = enabledPlugins[msg.sender][SENTINEL_MODULES];
         PluginAccessInfo storage senderPlugin = enabledPlugins[msg.sender][plugin];
 
@@ -67,7 +58,7 @@ contract SafeProtocolManagerAttestation is SafeProtocolManager {
      * @notice Sets hooks on an account. If Zero address is set, manager will not perform pre and post checks for on Safe transaction.
      * @param hooks Address of the hooks to be enabled for msg.sender.
      */
-    function setHooks(address hooks) external override  {
+    function setHooks(address hooks) external override  onlyVerifiedModule(hooks)  {
         if (hooks != address(0) && !ISafeProtocolHooks(hooks).supportsInterface(type(ISafeProtocolHooks).interfaceId)) {
             revert AddressDoesNotImplementHooksInterface(hooks);
         }
