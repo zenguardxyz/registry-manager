@@ -5,7 +5,7 @@ export default {
       "chainId": "5",
       "contracts": {
         "SafeProtocolManagerAttestation": {
-          "address": "0xEde5056fAEafF22E922ED6a8458091B7404354A8",
+          "address": "0x618a4698D77A58fDAa9f079F3223250baB5B2f16",
           "abi": [
             {
               "inputs": [
@@ -937,13 +937,18 @@ export default {
           ]
         },
         "SafeProtocolRegistryAttestation": {
-          "address": "0x036cE4a087649154aA9314fc12221BaE76eAc697",
+          "address": "0x31e02552F56939fA4B28CF3D86b552A4eA70f3E9",
           "abi": [
             {
               "inputs": [
                 {
                   "internalType": "address",
                   "name": "initialOwner",
+                  "type": "address"
+                },
+                {
+                  "internalType": "contract IEAS",
+                  "name": "_eas",
                   "type": "address"
                 }
               ],
@@ -990,6 +995,12 @@ export default {
                   "indexed": false,
                   "internalType": "address",
                   "name": "integration",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "publisher",
                   "type": "address"
                 }
               ],
@@ -1093,17 +1104,25 @@ export default {
                   "type": "address"
                 },
                 {
-                  "internalType": "contract IEAS",
-                  "name": "eas",
-                  "type": "address"
-                },
-                {
                   "internalType": "bytes32",
                   "name": "attestation",
                   "type": "bytes32"
                 }
               ],
               "name": "attestIntegration",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "attestation",
+                  "type": "bytes32"
+                }
+              ],
+              "name": "attestPublisher",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
@@ -1162,6 +1181,19 @@ export default {
               "type": "function"
             },
             {
+              "inputs": [],
+              "name": "eas",
+              "outputs": [
+                {
+                  "internalType": "contract IEAS",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
               "inputs": [
                 {
                   "internalType": "address",
@@ -1188,6 +1220,11 @@ export default {
                   "internalType": "bytes32",
                   "name": "attestationId",
                   "type": "bytes32"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "initialized",
+                  "type": "bool"
                 }
               ],
               "stateMutability": "view",
@@ -7824,7 +7861,7 @@ export default {
           ]
         },
         "SafeProtocolManagerAttestation": {
-          "address": "0x548ffe3207b643a6d95F7bfa01b5D4A0fb7DF01a",
+          "address": "0x618a4698D77A58fDAa9f079F3223250baB5B2f16",
           "abi": [
             {
               "inputs": [
