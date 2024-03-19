@@ -14,6 +14,7 @@ contract SafeProtocolRegistry is ISafeProtocolRegistry, Ownable2Step {
         Enum.IntegrationType integrationType;
     }
 
+
     error CannotFlagIntegration(address integration);
     error CannotAddIntegration(address integration);
 
